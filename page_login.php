@@ -1,5 +1,7 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>
@@ -23,9 +25,11 @@
     <link rel="mask-icon" href="img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <link rel="stylesheet" media="screen, print" href="css/page-login-alt.css">
 </head>
+
 <body>
     <div class="blankpage-form-field">
-        <div class="page-logo m-0 w-100 align-items-center justify-content-center rounded border-bottom-left-radius-0 border-bottom-right-radius-0 px-4">
+        <div
+            class="page-logo m-0 w-100 align-items-center justify-content-center rounded border-bottom-left-radius-0 border-bottom-right-radius-0 px-4">
             <a href="javascript:void(0)" class="page-logo-link press-scale-down d-flex align-items-center">
                 <img src="img/logo.png" alt="SmartAdmin WebApp" aria-roledescription="logo">
                 <span class="page-logo-text mr-1">Учебный проект</span>
@@ -33,9 +37,12 @@
             </a>
         </div>
         <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
+            <?php if (isset($_SESSION['success'])): ?>
             <div class="alert alert-success">
                 Регистрация успешна
             </div>
+            <?php endif; ?>
+            <?php unset($_SESSION['success']) ?>
             <form action="">
                 <div class="form-group">
                     <label class="form-label" for="username">Email</label>
@@ -43,7 +50,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="password">Пароль</label>
-                    <input type="password" id="password" class="form-control" placeholder="" >
+                    <input type="password" id="password" class="form-control" placeholder="">
                 </div>
                 <button type="submit" class="btn btn-default float-right">Войти</button>
             </form>
@@ -58,4 +65,5 @@
     </video>
     <script src="js/vendors.bundle.js"></script>
 </body>
+
 </html>
