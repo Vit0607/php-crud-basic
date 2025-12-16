@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php
+session_start();
+require 'functions.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,12 +69,7 @@
                             </div>
                             <div class="col-xl-6 ml-auto mr-auto">
                                 <div class="card p-4 rounded-plus bg-faded">
-                                    <?php if (isset($_SESSION['error'])): ?>
-                                    <div class="alert alert-danger text-dark" role="alert">
-                                        <strong>Уведомление!</strong> <?php echo $_SESSION['error']; ?>
-                                    </div>
-                                    <?php endif; ?>
-                                    <?php unset($_SESSION['error']); ?>
+                                    <?php display_flash_message('danger'); ?>
                                     <form id="js-login" novalidate="" action="register.php" method="POST">
                                         <div class="form-group">
                                             <label class="form-label" for="emailverify">Email</label>
