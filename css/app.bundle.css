@@ -13,3 +13,13 @@
  ul {
  	margin-bottom: 0px;
  }
+
+ html body {
+	display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+ }
+
+ .page-footer {
+	margin-top: auto;
+ }
