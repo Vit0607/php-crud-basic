@@ -10,13 +10,23 @@ function get_user_by_email($email) {
     return $user;
 }
 
+function get_user_by_id($user_id) {
+    $pdo = new PDO('mysql:host=localhost;dbname=php-crud-basic', 'root', '');
+    $sql = "SELECT * FROM users WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(['id' => $user_id]);
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+    return $user;
+}
+
 function add_user($email, $password) {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     $pdo = new PDO('mysql:host=localhost;dbname=php-crud-basic', 'root', '');
-    $sql = "INSERT INTO users (email, password) VALUES (:email, :password)";
+    $sql = "INSERT INTO users (email, password, role) VALUES (:email, :password, :role)";
     $statement = $pdo->prepare($sql);
-    $statement->execute(['email' => $email, 'password' => $hashed_password]);
+    $statement->execute(['email' => $email, 'password' => $hashed_password, 'role' => 'user']);
     $lastId = $pdo->lastInsertId();
 
     return $lastId;
@@ -103,4 +113,47 @@ function is_equal($user, $current_user) {
     } 
     
     return false;
+}
+
+function edit($user_id, $username, $job_title, $phone, $address) {
+    $pdo = new PDO('mysql:host=localhost;dbname=php-crud-basic', 'root', '');
+    $sql = 'UPDATE users SET username=:username, job_title=:job_title, phone=:phone, address=:address, phone2=:phone2 WHERE id=:id'; 
+    $statement = $pdo->prepare($sql);
+    $result = $statement->execute(['id' => $user_id, 'username' => $username, 'job_title' => $job_title, 'phone' => $phone, 'address' => $address, 'phone2' =>preg_replace('/[^\d\+]/', '', $phone) ]);
+    return $result;
+}
+
+function set_status($user_id, $status) {
+    $pdo = new PDO('mysql:host=localhost;dbname=php-crud-basic', 'root', '');
+    $sql = 'UPDATE users SET status=:status WHERE id=:id';
+    $statement = $pdo->prepare($sql);
+    $statement->execute(['id' => $user_id, 'status' => $status]);
+}
+
+function upload_avatar($user_id, $image) {
+    $file_extension = pathinfo($image['name'])['extension'];
+    $file_name = pathinfo($image['name'])['filename'];
+    $file = uniqid() . $file_name . '.' . $file_extension;
+
+    $dir_name = 'img/demo/avatars/';
+
+    $user_image_path = get_user_by_id($user_id)['image'];
+
+    if(!empty($user_image_path)) {
+        unlink($user_image_path);
+    }
+
+    move_uploaded_file($image['tmp_name'], $dir_name . $file);
+
+    $pdo = new PDO('mysql:host=localhost;dbname=php-crud-basic', 'root', '');
+    $sql = 'UPDATE users SET image=:image WHERE id=:id';
+    $statement = $pdo->prepare($sql);
+    $statement->execute(['id' => $user_id, 'image' => $dir_name . $file]);
+}
+
+function add_social_links($user_id, $vk, $telegram, $instagram) {
+    $pdo = new PDO('mysql:host=localhost;dbname=php-crud-basic', 'root', '');
+    $sql = 'UPDATE users SET vk=:vk, telegram=:telegram, instagram=:instagram WHERE id=:id';
+    $statement = $pdo->prepare($sql);
+    $statement->execute(['id' => $user_id, 'vk' => $vk, 'telegram' => $telegram, 'instagram' => $instagram]);
 }

@@ -62,9 +62,10 @@
     </nav>
 
     <main id="js-page-content" role="main" class="page-content mt-3">
-        <div class="alert alert-success">
+        <!-- <div class="alert alert-success">
             Профиль успешно обновлен.
-        </div>
+        </div> -->
+        <?php display_flash_message('success'); ?>
         <div class="subheader">
             <h1 class="subheader-title">
                 <i class='subheader-icon fal fa-users'></i> Список пользователей
@@ -73,7 +74,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <?php if(is_admin(get_curr_user())): ?>
-                <a class="btn btn-success" href="create_user.html">Добавить</a>
+                <a class="btn btn-success" href="create_user.php">Добавить</a>
                 <?php endif; ?>
 
                 <div class="border-faded bg-faded p-3 mb-g d-flex mt-3">
