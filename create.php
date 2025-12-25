@@ -18,7 +18,7 @@ if (!empty($user)) {
 
 $last_user_id = add_user($email, $password);
 
-edit($last_user_id, $_POST['username'], $_POST['job_title'], $_POST['phone'], $_POST['address']);
+edit_info($last_user_id, $_POST['username'], $_POST['job_title'], $_POST['phone'], $_POST['address']);
 
 set_status($last_user_id, $_POST['status']);
 

@@ -115,7 +115,7 @@ function is_equal($user, $current_user) {
     return false;
 }
 
-function edit($user_id, $username, $job_title, $phone, $address) {
+function edit_info($user_id, $username, $job_title, $phone, $address) {
     $pdo = new PDO('mysql:host=localhost;dbname=php-crud-basic', 'root', '');
     $sql = 'UPDATE users SET username=:username, job_title=:job_title, phone=:phone, address=:address, phone2=:phone2 WHERE id=:id'; 
     $statement = $pdo->prepare($sql);
@@ -156,4 +156,12 @@ function add_social_links($user_id, $vk, $telegram, $instagram) {
     $sql = 'UPDATE users SET vk=:vk, telegram=:telegram, instagram=:instagram WHERE id=:id';
     $statement = $pdo->prepare($sql);
     $statement->execute(['id' => $user_id, 'vk' => $vk, 'telegram' => $telegram, 'instagram' => $instagram]);
+}
+
+function is_user_author($logged_user_id, $edit_user_id) {
+    if ($logged_user_id !== $edit_user_id) {
+        return false;
+    }
+    
+    return true;
 }

@@ -66,6 +66,7 @@
             Профиль успешно обновлен.
         </div> -->
         <?php display_flash_message('success'); ?>
+        <?php display_flash_message('danger'); ?>
         <div class="subheader">
             <h1 class="subheader-title">
                 <i class='subheader-icon fal fa-users'></i> Список пользователей
