@@ -6,10 +6,12 @@ if (is_not_logged_in()) {
     redirect_to('login.php');
 }
 
-if (!is_admin(get_curr_user()) && !is_user_author($_SESSION['user']['id'], $GET['id'])) {
-    set_flash_message('danger', 'Можно редактировать только свой профиль!');
-    redirect_to('users.php');
-    exit;
+if (is_admin(get_curr_user()) == false) {
+    if (is_user_author($_SESSION['user']['id'], $_GET['id']) == false) {
+        set_flash_message('danger', 'Можно редактировать только свой профиль!');
+        redirect_to('users.php');
+        exit;
+    }
 }
 
 $user = get_user_by_id($_GET['id']);

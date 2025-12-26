@@ -89,11 +89,11 @@ function get_curr_user() {
 }
 
 function is_admin($user) {
-    if($user['role'] === 'admin') {
+    if($user['role'] == 'admin') {
         return true;
-    } 
-    
-    return false;
+    } else {
+        return false;
+    }
 }
 
 
@@ -159,9 +159,9 @@ function add_social_links($user_id, $vk, $telegram, $instagram) {
 }
 
 function is_user_author($logged_user_id, $edit_user_id) {
-    if ($logged_user_id !== $edit_user_id) {
+    if ($logged_user_id == $edit_user_id) {
+        return true;
+    } else {
         return false;
     }
-    
-    return true;
 }

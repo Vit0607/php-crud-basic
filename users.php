@@ -7,7 +7,7 @@
     }
 
     $users = get_all_users();
-    $current_user_id = $_SESSION['user']['user_id'];
+    $current_user_id = $_SESSION['user']['id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
