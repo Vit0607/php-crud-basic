@@ -6,7 +6,7 @@ if (is_not_logged_in(get_current_user())) {
     redirect_to('login.php');
 }
 
-$user = get_user_by_id($_SESSION['user']['id']);
+$user = get_user_by_id($_GET['id']);
 
 ?>
 <!DOCTYPE html>

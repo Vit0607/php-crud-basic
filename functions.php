@@ -165,3 +165,12 @@ function is_user_author($logged_user_id, $edit_user_id) {
         return false;
     }
 }
+
+function edit_credentials($user_id, $email, $password) {
+    $pdo = new PDO('mysql:host=localhost;dbname=php-crud-basic', 'root', '');
+    $sql = 'UPDATE users SET email=:email, password=:password WHERE id=:id';
+    $statement = $pdo->prepare($sql);
+    $result = $statement->execute(['id' => $user_id, 'email' => $email, 'password' => password_hash($password, PASSWORD_DEFAULT)]);
+    
+    return $result;
+}
