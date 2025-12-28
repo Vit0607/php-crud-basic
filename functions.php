@@ -174,3 +174,17 @@ function edit_credentials($user_id, $email, $password) {
     
     return $result;
 }
+
+function check_the_editing_rights($user_id) {
+    if (is_not_logged_in()) {
+        redirect_to('login.php');
+    }
+
+    if (is_admin(get_curr_user()) == false) {
+        if (is_user_author($_SESSION['user']['id'], $user_id) == false) {
+            set_flash_message('danger', 'Можно редактировать только свой профиль!');
+            redirect_to('users.php');
+            exit;
+        }
+    }
+}
