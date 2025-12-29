@@ -12,8 +12,8 @@ $statuses = [
     'danger' => 'Не беспокоить'
 ]
 
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
