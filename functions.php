@@ -188,3 +188,22 @@ function check_the_editing_rights($user_id) {
         }
     }
 }
+
+function delete($user_id) {
+    $pdo = new PDO('mysql:host=localhost;dbname=php-crud-basic', 'root', '');
+    $sql = 'SELECT * FROM users WHERE id=:id';
+    $statement = $pdo->prepare($sql);
+    $statement->execute(['id' => $user_id]);
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+    unlink($user['image']);
+
+    $sql = 'DELETE FROM users WHERE id=:id';
+    $statement = $pdo->prepare($sql);
+    $result = $statement->execute(['id' => $user_id]);
+    return $result;
+}
+
+function logout() {
+    unset($_SESSION['user']);
+    redirect_to('page_register.php');
+}
