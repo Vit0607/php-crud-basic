@@ -2,6 +2,8 @@
     session_start();
     require 'functions.php';
 
+    $title = 'Пользователи';
+
     if (is_not_logged_in()) {
         redirect_to('login.php');
     }
@@ -12,59 +14,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <meta name="description" content="Chartist.html">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
-    <!-- Call App Mode on ios devices -->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <!-- Remove Tap Highlight on Windows Phone IE -->
-    <meta name="msapplication-tap-highlight" content="no">
-    <!-- base css -->
-    <link id="vendorsbundle" rel="stylesheet" media="screen, print" href="css/vendors.bundle.css">
-    <link id="appbundle" rel="stylesheet" media="screen, print" href="css/app.bundle.css">
-    <link id="mytheme" rel="stylesheet" media="screen, print" href="#">
-    <link id="myskin" rel="stylesheet" media="screen, print" href="css/skins/skin-master.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" media="screen, print" href="css/fa-solid.css">
-    <link rel="stylesheet" media="screen, print" href="css/fa-brands.css">
-    <link rel="stylesheet" media="screen, print" href="css/fa-regular.css">
-    <!-- Place favicon.ico in the root directory -->
-    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
-    <link rel="mask-icon" href="img/favicon/safari-pinned-tab.svg" color="#5bbad5">
-</head>
+<?php include 'head.php'; ?>
 
 <body class="mod-bg-1 mod-nav-link">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-primary-gradient">
-        <a class="navbar-brand d-flex align-items-center fw-500" href="users.html"><img alt="logo"
-                class="d-inline-block align-top mr-2" src="img/logo.png"> Учебный проект</a> <button
-            aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
-            data-target="#navbarColor02" data-toggle="collapse" type="button"><span
-                class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarColor02">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Главная <span class="sr-only">(current)</span></a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="page_login.html">Войти</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Выйти</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+
+    <?php include 'nav.php'; ?>
 
     <main id="js-page-content" role="main" class="page-content mt-3">
-        <!-- <div class="alert alert-success">
-            Профиль успешно обновлен.
-        </div> -->
         <?php display_flash_message('success'); ?>
         <?php display_flash_message('danger'); ?>
         <div class="subheader">
@@ -97,7 +53,8 @@
         <div class="row" id="js-contacts">
             <?php foreach($users as $user): ?>
             <div class="col-xl-4">
-                <div id="c_1" class="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="oliver kopyov">
+                <div id="c_1" class="card border shadow-0 mb-g shadow-sm-hover"
+                    data-filter-tags="<?= strtolower($user['username']); ?>">
                     <div class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
                         <div class="d-flex flex-row align-items-center">
                             <span class="status status-<?php echo $user['status']; ?> mr-3">
@@ -147,8 +104,7 @@
                         <div class="p-3">
                             <a href="tel:<?php echo $user['phone2']; ?>" class="mt-1 d-block fs-sm fw-400 text-dark">
                                 <i class="fas fa-mobile-alt text-muted mr-2"></i> <?php echo $user['phone']; ?></a>
-                            <a href="mailto:oliver.kopyov@smartadminwebapp.com"
-                                class="mt-1 d-block fs-sm fw-400 text-dark">
+                            <a href="mailto:<?= $user['email']; ?>" class="mt-1 d-block fs-sm fw-400 text-dark">
                                 <i class="fas fa-mouse-pointer text-muted mr-2"></i>
                                 <?php echo $user['email']; ?></a>
                             <address class="fs-sm fw-400 mt-4 text-muted">
@@ -174,27 +130,11 @@
     </main>
 
     <!-- BEGIN Page Footer -->
-    <footer class="page-footer" role="contentinfo">
-        <div class="d-flex align-items-center flex-1 text-muted">
-            <span class="hidden-md-down fw-700">2020 © Учебный проект</span>
-        </div>
-        <div>
-            <ul class="list-table m-0">
-                <li><a href="intel_introduction.html" class="text-secondary fw-700">Home</a></li>
-                <li class="pl-3"><a href="info_app_licensing.html" class="text-secondary fw-700">About</a></li>
-            </ul>
-        </div>
-    </footer>
+    <?php include 'footer.php'; ?>
 
 </body>
 
-<!-- Сначала jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Затем Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Ваши скрипты -->
-<script src="js/vendors.bundle.js"></script>
-<script src="js/app.bundle.js"></script>
+
 <script>
 $(document).ready(function() {
     // Инициализация dropdown (важно для Bootstrap 4)
@@ -206,13 +146,15 @@ $(document).ready(function() {
     // Переключение вида (grid/table)
     $('input[type=radio][name=contactview]').change(function() {
         if (this.value == 'grid') {
-            $('#js-contacts .card').removeClassPrefix('mb-').addClass('mb-g');
-            $('#js-contacts .col-xl-12').removeClassPrefix('col-xl-').addClass('col-xl-4');
+            // Для grid вида
+            $('#js-contacts .col-xl-12').removeClass('col-xl-12').addClass('col-xl-4');
+            $('#js-contacts .card').removeClass('mb-1').addClass('mb-g');
             $('#js-contacts .js-expand-btn').addClass('d-none');
             $('#js-contacts .card-body + .card-body').addClass('show');
         } else if (this.value == 'table') {
-            $('#js-contacts .card').removeClassPrefix('mb-').addClass('mb-1');
-            $('#js-contacts .col-xl-4').removeClassPrefix('col-xl-').addClass('col-xl-12');
+            // Для table вида
+            $('#js-contacts .col-xl-4').removeClass('col-xl-4').addClass('col-xl-12');
+            $('#js-contacts .card').removeClass('mb-g').addClass('mb-1');
             $('#js-contacts .js-expand-btn').removeClass('d-none');
             $('#js-contacts .card-body + .card-body').removeClass('show');
         }
